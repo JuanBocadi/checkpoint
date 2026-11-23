@@ -32,22 +32,6 @@ La interfaz incluye tema oscuro verde, portadas reales de los seis juegos inicia
 
 En el catálogo de videojuegos, `user` solo lee y `admin` hace ABM. En la biblioteca personal, `user` crea, consulta, edita y elimina sus registros; `admin` puede gestionar todos. Las conversaciones del asistente son privadas para su dueño, incluso frente al administrador.
 
-## Router: rutas públicas, privadas y protegidas por rol
-
-Este repositorio también se utiliza para la actividad de implementación de los tres tipos de rutas, tanto en frontend como en backend.
-
-| Tipo de ruta | Ejemplo en frontend | Ejemplo en backend | Acceso |
-| --- | --- | --- | --- |
-| Pública | `/` y `/games/:id` | `GET /api/games` y `GET /api/games/:id` | Cualquier visitante, sin iniciar sesión. |
-| Privada | `/library` y `/chat` | `GET /api/library` y `GET /api/chat/conversations` | Cualquier usuario autenticado. Cada persona consulta sus propios registros. |
-| Privada protegida por rol | `/admin` y `/admin/games/new` | `POST /api/games`, `PATCH /api/games/:id` y `DELETE /api/games/:id` | Solo usuarios autenticados con rol `admin`. |
-
-En el frontend, [main.tsx](frontend/src/main.tsx) configura `BrowserRouter`, `Routes` y las rutas anidadas. [ProtectedRoute](frontend/src/components/ProtectedRoute.tsx) consulta la sesión de Better Auth: sin sesión redirige a `/login`; con `adminOnly={false}` permite usuarios autenticados; por defecto exige el rol `admin` y muestra **Sin permisos** al resto.
-
-En el backend, [app.ts](backend/src/app.ts) monta los routers de Express. Las [lecturas de videojuegos](backend/src/routes/games.routes.ts) son públicas; el [router de biblioteca](backend/src/routes/library.routes.ts) exige `authMiddleware`; las escrituras de videojuegos exigen `authMiddleware` y `requireRole("admin")`. Ambos controles están en [auth.middleware.ts](backend/src/middlewares/auth.middleware.ts): sin sesión devuelve **401** y sin el rol requerido devuelve **403**.
-
-Para probarlo, abrir el catálogo sin iniciar sesión; entrar a `/library`, que redirige al login; iniciar sesión con la cuenta `user` de prueba y acceder a su biblioteca; intentar `/admin`, que muestra **Sin permisos**; finalmente cerrar sesión e ingresar con la cuenta `admin` para acceder al panel de administración. Las credenciales están en la sección **Usuarios de prueba**.
-
 ## Stack y estructura
 
 Express 5 + TypeScript ESM, driver oficial de MongoDB, Better Auth con su adaptador Mongo y plugin admin; React 19 + Vite + TypeScript + React Router + React Hook Form + Zod. Node.js 24.
@@ -334,3 +318,19 @@ GitHub Actions compila ambos proyectos y ejecuta los tests del backend sin secre
 `.gitignore` excluye `.env`, variantes privadas, dependencias y compilados. Ningún secreto de infraestructura pertenece al código: BETTER_AUTH_SECRET, Client Secret de GitHub y URI de Atlas se configuran por entorno. Nunca colocar secretos en variables `VITE_*`, ya que se publican en el navegador. Las contraseñas de prueba anteriores son intencionalmente públicas para la corrección.
 
 Base de referencia: [T-Arias/mdw-2026](https://github.com/T-Arias/mdw-2026), especialmente [clase 13: Better Auth y Render](https://github.com/T-Arias/mdw-2026/tree/main/clase%2013). Se reutilizan el enfoque de autenticación, las capas de protección y el esquema de proxy; la entidad, interfaz y funcionalidad de catálogo se desarrollaron para Checkpoint. Las portadas, ilustraciones y capturas de los seis juegos iniciales proceden de sus fichas oficiales en Steam y conservan los derechos de sus respectivos titulares; se documentan en [docs/imagenes.md](docs/imagenes.md) y `/credits`. La interfaz, el icono de Checkpoint y los gráficos de respaldo son propios. Los títulos comerciales se usan como datos de ejemplo.
+
+## Router: rutas públicas, privadas y protegidas por rol
+
+Este repositorio también se utiliza para la actividad de implementación de los tres tipos de rutas, tanto en frontend como en backend.
+
+| Tipo de ruta | Ejemplo en frontend | Ejemplo en backend | Acceso |
+| --- | --- | --- | --- |
+| Pública | `/` y `/games/:id` | `GET /api/games` y `GET /api/games/:id` | Cualquier visitante, sin iniciar sesión. |
+| Privada | `/library` y `/chat` | `GET /api/library` y `GET /api/chat/conversations` | Cualquier usuario autenticado. Cada persona consulta sus propios registros. |
+| Privada protegida por rol | `/admin` y `/admin/games/new` | `POST /api/games`, `PATCH /api/games/:id` y `DELETE /api/games/:id` | Solo usuarios autenticados con rol `admin`. |
+
+En el frontend, [main.tsx](frontend/src/main.tsx) configura `BrowserRouter`, `Routes` y las rutas anidadas. [ProtectedRoute](frontend/src/components/ProtectedRoute.tsx) consulta la sesión de Better Auth: sin sesión redirige a `/login`; con `adminOnly={false}` permite usuarios autenticados; por defecto exige el rol `admin` y muestra **Sin permisos** al resto.
+
+En el backend, [app.ts](backend/src/app.ts) monta los routers de Express. Las [lecturas de videojuegos](backend/src/routes/games.routes.ts) son públicas; el [router de biblioteca](backend/src/routes/library.routes.ts) exige `authMiddleware`; las escrituras de videojuegos exigen `authMiddleware` y `requireRole("admin")`. Ambos controles están en [auth.middleware.ts](backend/src/middlewares/auth.middleware.ts): sin sesión devuelve **401** y sin el rol requerido devuelve **403**.
+
+Para probarlo, abrir el catálogo sin iniciar sesión; entrar a `/library`, que redirige al login; iniciar sesión con la cuenta `user` de prueba y acceder a su biblioteca; intentar `/admin`, que muestra **Sin permisos**; finalmente cerrar sesión e ingresar con la cuenta `admin` para acceder al panel de administración. Las credenciales están en la sección **Usuarios de prueba**.
