@@ -4,7 +4,7 @@ Aplicación full stack de **Juan Cruz Bocadi** para el TP2 de Metodologías y De
 
 ## Entrega y estado del despliegue
 
-**Backend y frontend publicados en Render y verificados el 23/11/2026.** La API se conecta a MongoDB Atlas. Quedan pendientes la publicación de la audiencia de Google y la prueba completa de los accesos sociales en producción.
+**Backend y frontend publicados en Render y verificados el 23/11/2026.** La API se conecta a MongoDB Atlas. Google ya está publicado para usuarios externos; queda pendiente la prueba completa de los accesos sociales en producción.
 
 La ejecución local principal ya está conectada a MongoDB Atlas, base `checkpoint`, con seis videojuegos iniciales y las cuentas admin/user verificadas. `npm run dev:demo` sigue disponible como alternativa aislada y temporal.
 
@@ -14,7 +14,7 @@ La ejecución local principal ya está conectada a MongoDB Atlas, base `checkpoi
 | Frontend en Render | [checkpoint-juanbocadi.onrender.com](https://checkpoint-juanbocadi.onrender.com) — activo |
 | Backend en Render | [checkpoint-api-juanbocadi.onrender.com](https://checkpoint-api-juanbocadi.onrender.com) — activo; `/api/health` responde 200 |
 | Login GitHub | Credenciales y callback de producción configurados; pendiente de completar el login en el navegador |
-| Login Google | Credenciales y callback de producción configurados; pendiente de publicar la audiencia y completar el login en el navegador |
+| Login Google | Credenciales y callback configurados, audiencia en producción; pendiente de completar el login en el navegador |
 
 Se verificaron mediante HTTP sobre el frontend publicado: proxy `/api`, catálogo y paginación, detalle, login de ambas cuentas de corrección, sesión persistida, logout, permisos 401/403, validaciones 400, recurso inexistente 404, CRUD de videojuegos, biblioteca propia y restricciones de acceso global. El asistente respondió usando Groq y herramientas del catálogo; su historial persistió y fue inaccesible para otro usuario, incluso admin. Los registros temporales de comprobación se eliminaron. Las rutas `/privacy`, `/login`, `/admin`, `/admin/users`, `/admin/library`, `/library` y `/chat` devuelven la SPA al solicitarlas directamente. Estas comprobaciones no sustituyen la prueba manual de OAuth ni de los formularios en el navegador.
 
@@ -34,7 +34,7 @@ Se verificaron mediante HTTP sobre el frontend publicado: proxy `/api`, catálog
 - Formularios de registro, login y videojuegos con React Hook Form y Zod.
 - Validaciones de cuerpo y consultas, errores claros, estados vacíos y confirmación de eliminación.
 
-El catálogo de videojuegos conserva los permisos mínimos: `user` solo lee y `admin` hace ABM. El opcional de registros propios se aplica a la biblioteca personal: `user` crea, consulta, edita y elimina sus registros; `admin` puede gestionar todos. Las conversaciones del asistente son privadas para su dueño, incluso frente al administrador. Groq ya fue verificado en producción; Google conserva pendiente la publicación de su audiencia y la prueba de acceso social.
+El catálogo de videojuegos conserva los permisos mínimos: `user` solo lee y `admin` hace ABM. El opcional de registros propios se aplica a la biblioteca personal: `user` crea, consulta, edita y elimina sus registros; `admin` puede gestionar todos. Las conversaciones del asistente son privadas para su dueño, incluso frente al administrador. Groq ya fue verificado en producción; Google está publicado y conserva pendiente la prueba completa de acceso social.
 
 ## Stack y estructura
 
@@ -154,7 +154,7 @@ Estas credenciales son **públicas y exclusivas de demostración/corrección**, 
 | admin | `admin@checkpoint.test` | `AdminCheckpoint2026!` |
 | user | `user@checkpoint.test` | `UserCheckpoint2026!` |
 
-Las cuentas existen en la demo temporal y fueron creadas en la base `checkpoint` de Atlas. El 23/11/2026 se verificó el login de ambas a través del backend local conectado a Atlas, con roles `admin` y `user` respectivamente. Su acceso desde el frontend publicado en Render aún está pendiente de verificación. Para reproducir la carga en otra base, completar las cuatro variables `SEED_*` con estos valores y ejecutar `npm run seed`.
+Las cuentas existen en la demo temporal y fueron creadas en la base `checkpoint` de Atlas. El 23/11/2026 se verificó el login de ambas a través del backend local y del proxy `/api` del frontend publicado en Render, con roles `admin` y `user` respectivamente. Para reproducir la carga en otra base, completar las cuatro variables `SEED_*` con estos valores y ejecutar `npm run seed`.
 
 ## API
 
@@ -259,6 +259,8 @@ El primer rewrite mantiene autenticación y cookies bajo el dominio del frontend
 8. Completar la OAuth App y ejecutar el seed contra Atlas con las cuentas de corrección. Puede ejecutarse desde local con un `.env` privado apuntando a la base de producción; el script no necesita crear un servicio adicional ni exponer contraseñas por HTTP.
 9. Verificar el despliegue siguiendo `docs/entrega.md` y actualizar esta sección con las URLs y resultados reales.
 
+`npm start` da 2000 ms a cada intento de selección de familia de red de Node. El primer intento de Google OAuth en Render falló con `fetch failed` y `AggregateError [ETIMEDOUT]`, sin respuesta de rechazo de Google. Este margen reduce los cortes prematuros descritos en el [problema de conectividad de Node](https://github.com/nodejs/node/issues/54359); conserva IPv4/IPv6 y la validación TLS. El cambio requiere un nuevo despliegue y una nueva prueba completa de OAuth.
+
 ### GitHub OAuth
 
 En GitHub: Settings → Developer settings → OAuth Apps.
@@ -300,7 +302,7 @@ El agente `createAgent` usa `ChatGroq` y dos herramientas de lectura: `search_ca
 
 El chat conserva hasta 40 mensajes por conversación y envía al modelo las últimas 12 intervenciones como contexto. Tiene timeout, cancelación al abandonar la página, bloqueo de envíos simultáneos por conversación y límite de 10 solicitudes cada 10 minutos por usuario, persistido en MongoDB con limpieza TTL. No registra claves ni contenido de mensajes en logs. Las notas personales de la biblioteca no se envían al modelo.
 
-Sin clave o ante errores del proveedor devuelve 503 y la interfaz lo comunica; no se simulan respuestas de IA. Los tests sustituyen el proveedor externo de manera explícita para verificar permisos, persistencia y errores sin consumir cuota; además prueban el ciclo de herramientas con el modelo de prueba oficial de LangChain. El 23/11/2026 se verificó una consulta real con Groq en local: recuperó los indies de menos de USD 20 desde MongoDB, respondió con sus precios y devolvió las fuentes consultadas. La verificación en producción queda pendiente del despliegue.
+Sin clave o ante errores del proveedor devuelve 503 y la interfaz lo comunica; no se simulan respuestas de IA. Los tests sustituyen el proveedor externo de manera explícita para verificar permisos, persistencia y errores sin consumir cuota; además prueban el ciclo de herramientas con el modelo de prueba oficial de LangChain. El 23/11/2026 se verificó una consulta real con Groq en local: recuperó los indies de menos de USD 20 desde MongoDB, respondió con sus precios y devolvió las fuentes consultadas. También se verificó en producción una recomendación con herramientas del catálogo, fuentes e historial persistido.
 
 ## Verificación
 

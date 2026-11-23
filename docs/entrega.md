@@ -13,7 +13,7 @@ Estado verificado el 23/11/2026. Las casillas pendientes requieren comprobación
 - [x] `/*` reescribe a `/index.html`.
 - [x] `BETTER_AUTH_URL` y callback OAuth coinciden con el frontend real.
 - [x] OAuth App de producción tiene su Client ID/Secret en Render.
-- [ ] Cliente Google OAuth configurado en Render y Audience en producción para cualquier cuenta.
+- [x] Cliente Google OAuth configurado en Render y Audience en producción para cualquier cuenta.
 - [x] Groq API key configurada y chatbot probado con el catálogo real.
 - [x] Seed ejecutado sobre Atlas con ambas cuentas de corrección y login local verificado.
 

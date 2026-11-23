@@ -10,7 +10,7 @@
     "dev": "tsx watch src/server.ts",
     "dev:demo": "tsx scripts/preview.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js",
+    "start": "node --network-family-autoselection-attempt-timeout=2000 dist/server.js",
     "seed": "tsx src/scripts/seed.ts",
     "test": "tsx --test tests/*.test.ts"
   },
