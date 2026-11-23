@@ -5,7 +5,8 @@ Esta lista registra tareas de publicación pendientes; no confirma que ya estén
 ## Infraestructura
 
 - [x] Repo propio en GitHub con `backend/`, `frontend/` y varios commits descriptivos.
-- [ ] Clúster Atlas, usuario de base y acceso de red para el backend.
+- [x] Clúster Atlas y usuario con readWrite sobre `checkpoint`; conexión desde el backend local verificada.
+- [ ] Acceso de red autorizado para el backend de Render.
 - [ ] Backend Web Service activo y `/api/health` responde 200.
 - [ ] Frontend Static Site activo.
 - [ ] `/api/*` reescribe al backend antes del fallback de la SPA.
@@ -14,7 +15,7 @@ Esta lista registra tareas de publicación pendientes; no confirma que ya estén
 - [ ] OAuth App de producción tiene su Client ID/Secret en Render.
 - [ ] Cliente Google OAuth configurado en Render y Audience en producción para cualquier cuenta.
 - [ ] Groq API key configurada y chatbot probado con el catálogo real.
-- [ ] Seed ejecutado sobre producción con ambas cuentas de corrección.
+- [x] Seed ejecutado sobre Atlas con ambas cuentas de corrección y login local verificado.
 
 ## Prueba desde el frontend publicado
 

@@ -6,6 +6,8 @@ Aplicación full stack de **Juan Cruz Bocadi** para el TP2 de Metodologías y De
 
 **El código está publicado en GitHub y la demo local está preparada. El despliegue en Render todavía está pendiente.** Las direcciones de Render siguientes son los nombres propuestos en `render.yaml`; se deben reemplazar por las URLs reales confirmadas al publicar. No son evidencia de un despliegue activo.
 
+La ejecución local principal ya está conectada a MongoDB Atlas, base `checkpoint`, con seis videojuegos iniciales y las cuentas admin/user verificadas. `npm run dev:demo` sigue disponible como alternativa aislada y temporal.
+
 | Entregable | Estado / destino propuesto |
 | --- | --- |
 | Repositorio GitHub | [JuanBocadi/checkpoint](https://github.com/JuanBocadi/checkpoint) — código publicado |
@@ -150,7 +152,7 @@ Estas credenciales son **públicas y exclusivas de demostración/corrección**, 
 | admin | `admin@checkpoint.test` | `AdminCheckpoint2026!` |
 | user | `user@checkpoint.test` | `UserCheckpoint2026!` |
 
-Las cuentas existen en la demo temporal. Para producción completar las cuatro variables `SEED_*` con estos valores y ejecutar `npm run seed` una vez contra la base de producción. **Su creación y acceso en producción aún no están verificados.**
+Las cuentas existen en la demo temporal y fueron creadas en la base `checkpoint` de Atlas. El 23/11/2026 se verificó el login de ambas a través del backend local conectado a Atlas, con roles `admin` y `user` respectivamente. Su acceso desde el frontend publicado en Render aún está pendiente de verificación. Para reproducir la carga en otra base, completar las cuatro variables `SEED_*` con estos valores y ejecutar `npm run seed`.
 
 ## API
 
