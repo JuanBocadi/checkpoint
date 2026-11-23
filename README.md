@@ -20,7 +20,7 @@ Se verificaron mediante HTTP sobre el frontend publicado: proxy `/api`, catálog
 
 ## Funcionalidades
 
-Actualización visual preparada para revisión local: tema oscuro verde, portadas reales de los seis juegos iniciales, destacados seleccionables, filtros por género, fichas con galería de capturas y juegos relacionados, y una página pública de créditos en `/credits`. Las imágenes se sirven desde `frontend/public/images/games/`; procedencia y titulares en [docs/imagenes.md](docs/imagenes.md). Un título sin material asociado conserva una portada gráfica de respaldo.
+La interfaz incluye tema oscuro verde, portadas reales de los seis juegos iniciales, destacados seleccionables, filtros por género, fichas con galería de capturas y juegos relacionados, y una página pública de créditos en `/credits`. Las imágenes se sirven desde `frontend/public/images/games/`; procedencia y titulares en [docs/imagenes.md](docs/imagenes.md). Un título sin material asociado conserva una portada gráfica de respaldo. El rediseño se compiló y se revisó en navegador de escritorio y en una vista móvil de 360 px, incluidos el selector de destacados, el filtro de indies y la galería de capturas.
 
 - Catálogo público, detalle, búsqueda por título, filtros por género y plataforma y paginación.
 - Registro, login con email/contraseña, login GitHub y cierre de sesión con Better Auth.
