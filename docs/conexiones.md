@@ -35,6 +35,10 @@ Completar las variables privadas en Environment. El secreto de Better Auth se ge
 
 El usuario debe completar personalmente cualquier aceptación de términos o verificación de identidad que Google solicite. No se necesitan permisos de Gmail, Drive ni Calendar para este login.
 
+En la creación del cliente, dejar desmarcada la opción para agentes de IA: este cliente se usa para autenticación. El chatbot usa Groq de forma independiente.
+
+Google solo muestra el secreto completo al crearlo. Guardarlo de inmediato en el entorno privado. Si se cerró el diálogo y no se conservó, abrir Clientes → Checkpoint Web → Agregar secreto y guardar el nuevo. No subir el JSON de credenciales al repositorio. Referencia: [Administrar clientes OAuth](https://support.google.com/cloud/answer/15549257?hl=es).
+
 ## Groq
 
 1. Abrir https://console.groq.com/ y crear la cuenta.

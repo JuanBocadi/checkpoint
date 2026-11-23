@@ -23,6 +23,7 @@ export type LibraryInput = z.infer<typeof librarySchema>;
 export interface LibraryEntry extends LibraryInput {
   _id: string;
   ownerId: string;
+  ownerName?: string;
   gameId: string;
   game: Game | null;
   createdAt: string;

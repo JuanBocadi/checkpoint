@@ -12,6 +12,8 @@ test(
     const mongo = await MongoMemoryReplSet.create({ replSet: { count: 1 } });
     Object.assign(process.env, {
       NODE_ENV: "test",
+      PORT: "3000",
+      GROQ_MODEL: "openai/gpt-oss-20b",
       MONGODB_URI: mongo.getUri("checkpoint_extended"),
       BETTER_AUTH_SECRET: randomBytes(48).toString("base64"),
       BETTER_AUTH_URL: "http://localhost:5173",
@@ -256,19 +258,9 @@ test(
             ).status,
             400,
           );
-          assert.equal(
-            (
-              await (
-                await request(
-                  "/library?scope=all",
-                  "GET",
-                  undefined,
-                  accounts.admin.cookie,
-                )
-              ).json()
-            ).pagination.total,
-            1,
-          );
+          const adminLibrary = await (await request("/library?scope=all", "GET", undefined, accounts.admin.cookie)).json();
+          assert.equal(adminLibrary.pagination.total, 1);
+          assert.equal(adminLibrary.data[0].ownerName, "alice");
           assert.equal(
             (
               await request(

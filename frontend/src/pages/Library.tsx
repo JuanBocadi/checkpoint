@@ -138,7 +138,10 @@ export function Library({ all = false }: { all?: boolean }) {
                     {entry.rating ? `${entry.rating}/10` : "Sin puntuar"}
                   </p>
                   {all && (
-                    <p className="muted">Usuario: …{entry.ownerId.slice(-8)}</p>
+                    <p className="muted">
+                      Usuario:{" "}
+                      {entry.ownerName ?? `…${entry.ownerId.slice(-8)}`}
+                    </p>
                   )}
                   {entry.notes && (
                     <p className="library-notes">{entry.notes}</p>

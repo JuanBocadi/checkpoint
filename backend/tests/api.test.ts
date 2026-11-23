@@ -10,6 +10,11 @@ test(
   async (t) => {
     const mongo = await MongoMemoryReplSet.create({ replSet: { count: 1 } });
     process.env.NODE_ENV = "test";
+    process.env.PORT = "3000";
+    process.env.GOOGLE_CLIENT_ID = "";
+    process.env.GOOGLE_CLIENT_SECRET = "";
+    process.env.GROQ_API_KEY = "";
+    process.env.GROQ_MODEL = "openai/gpt-oss-20b";
     process.env.MONGODB_URI = mongo.getUri("checkpoint_test");
     process.env.BETTER_AUTH_SECRET = randomBytes(48).toString("base64");
     process.env.BETTER_AUTH_URL = "http://localhost:5173";

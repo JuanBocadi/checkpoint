@@ -23,29 +23,24 @@ libraryRouter.use(authMiddleware);
 libraryRouter.get("/", async (req, res) => {
   const parsed = libraryQuerySchema.safeParse(req.query);
   if (!parsed.success) {
-    res
-      .status(400)
-      .json({
-        error: {
-          message: "Filtros de biblioteca inválidos.",
-          issues: parsed.error.issues.map((i) => ({
-            field: i.path.join("."),
-            message: i.message,
-          })),
-        },
-      });
+    res.status(400).json({
+      error: {
+        message: "Filtros de biblioteca inválidos.",
+        issues: parsed.error.issues.map((i) => ({
+          field: i.path.join("."),
+          message: i.message,
+        })),
+      },
+    });
     return;
   }
   const { scope, status, favorite, gameId, page, limit } = parsed.data;
   if (scope === "all" && req.user!.role !== "admin") {
-    res
-      .status(403)
-      .json({
-        error: {
-          message:
-            "Solo un administrador puede consultar todas las bibliotecas.",
-        },
-      });
+    res.status(403).json({
+      error: {
+        message: "Solo un administrador puede consultar todas las bibliotecas.",
+      },
+    });
     return;
   }
   const filter: Filter<LibraryDocument> =
@@ -69,6 +64,36 @@ libraryRouter.get("/", async (req, res) => {
           },
         },
         { $unwind: { path: "$game", preserveNullAndEmptyArrays: true } },
+        ...(scope === "all"
+          ? [
+              {
+                $lookup: {
+                  from: "user",
+                  let: { ownerId: "$ownerId" },
+                  pipeline: [
+                    {
+                      $match: {
+                        $expr: { $eq: [{ $toString: "$_id" }, "$$ownerId"] },
+                      },
+                    },
+                    { $project: { _id: 0, name: 1 } },
+                  ],
+                  as: "owner",
+                },
+              },
+              {
+                $set: {
+                  ownerName: {
+                    $ifNull: [
+                      { $arrayElemAt: ["$owner.name", 0] },
+                      "Cuenta eliminada",
+                    ],
+                  },
+                },
+              },
+              { $unset: "owner" },
+            ]
+          : []),
       ])
       .toArray(),
     entries.countDocuments(filter),
@@ -82,17 +107,15 @@ libraryRouter.get("/", async (req, res) => {
 libraryRouter.post("/", async (req, res) => {
   const parsed = createLibrarySchema.safeParse(req.body);
   if (!parsed.success) {
-    res
-      .status(400)
-      .json({
-        error: {
-          message: "Revisá los datos de tu biblioteca.",
-          issues: parsed.error.issues.map((i) => ({
-            field: i.path.join("."),
-            message: i.message,
-          })),
-        },
-      });
+    res.status(400).json({
+      error: {
+        message: "Revisá los datos de tu biblioteca.",
+        issues: parsed.error.issues.map((i) => ({
+          field: i.path.join("."),
+          message: i.message,
+        })),
+      },
+    });
     return;
   }
   const gameId = new ObjectId(parsed.data.gameId);
@@ -132,11 +155,9 @@ libraryRouter.post("/", async (req, res) => {
 
 libraryRouter.param("id", (_req, res, next, id: string) => {
   if (!objectIdSchema.safeParse(id).success) {
-    res
-      .status(400)
-      .json({
-        error: { message: "El identificador del registro no es válido." },
-      });
+    res.status(400).json({
+      error: { message: "El identificador del registro no es válido." },
+    });
     return;
   }
   next();
@@ -155,11 +176,9 @@ libraryRouter.get("/:id", async (req, res) => {
     visibleFilter(req.params.id as string, req.user!),
   );
   if (!entry) {
-    res
-      .status(404)
-      .json({
-        error: { message: "No encontramos ese registro en tu biblioteca." },
-      });
+    res.status(404).json({
+      error: { message: "No encontramos ese registro en tu biblioteca." },
+    });
     return;
   }
   const game = await db.collection("games").findOne({ _id: entry.gameId });
@@ -168,17 +187,15 @@ libraryRouter.get("/:id", async (req, res) => {
 libraryRouter.patch("/:id", async (req, res) => {
   const parsed = updateLibrarySchema.safeParse(req.body);
   if (!parsed.success) {
-    res
-      .status(400)
-      .json({
-        error: {
-          message: "Revisá los cambios enviados.",
-          issues: parsed.error.issues.map((i) => ({
-            field: i.path.join("."),
-            message: i.message,
-          })),
-        },
-      });
+    res.status(400).json({
+      error: {
+        message: "Revisá los cambios enviados.",
+        issues: parsed.error.issues.map((i) => ({
+          field: i.path.join("."),
+          message: i.message,
+        })),
+      },
+    });
     return;
   }
   const entry = await entries.findOneAndUpdate(
@@ -187,11 +204,9 @@ libraryRouter.patch("/:id", async (req, res) => {
     { returnDocument: "after" },
   );
   if (!entry) {
-    res
-      .status(404)
-      .json({
-        error: { message: "No encontramos ese registro en tu biblioteca." },
-      });
+    res.status(404).json({
+      error: { message: "No encontramos ese registro en tu biblioteca." },
+    });
     return;
   }
   res.json({ data: entry });
@@ -201,11 +216,9 @@ libraryRouter.delete("/:id", async (req, res) => {
     visibleFilter(req.params.id as string, req.user!),
   );
   if (!result.deletedCount) {
-    res
-      .status(404)
-      .json({
-        error: { message: "No encontramos ese registro en tu biblioteca." },
-      });
+    res.status(404).json({
+      error: { message: "No encontramos ese registro en tu biblioteca." },
+    });
     return;
   }
   res.status(204).end();
