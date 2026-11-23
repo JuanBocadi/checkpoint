@@ -291,7 +291,7 @@ El agente `createAgent` usa `ChatGroq` y dos herramientas de lectura: `search_ca
 
 El chat conserva hasta 40 mensajes por conversación y envía al modelo las últimas 12 intervenciones como contexto. Tiene timeout, cancelación al abandonar la página, bloqueo de envíos simultáneos por conversación y límite de 10 solicitudes cada 10 minutos por usuario, persistido en MongoDB con limpieza TTL. No registra claves ni contenido de mensajes en logs. Las notas personales de la biblioteca no se envían al modelo.
 
-Sin clave o ante errores del proveedor devuelve 503 y la interfaz lo comunica; no se simulan respuestas de IA. Los tests sustituyen el proveedor externo de manera explícita para verificar permisos, persistencia y errores sin consumir cuota; además prueban el ciclo de herramientas con el modelo de prueba oficial de LangChain. La prueba con Groq real queda pendiente hasta configurar la clave.
+Sin clave o ante errores del proveedor devuelve 503 y la interfaz lo comunica; no se simulan respuestas de IA. Los tests sustituyen el proveedor externo de manera explícita para verificar permisos, persistencia y errores sin consumir cuota; además prueban el ciclo de herramientas con el modelo de prueba oficial de LangChain. El 23/11/2026 se verificó una consulta real con Groq en local: recuperó los indies de menos de USD 20 desde MongoDB, respondió con sus precios y devolvió las fuentes consultadas. La verificación en producción queda pendiente del despliegue.
 
 ## Verificación
 

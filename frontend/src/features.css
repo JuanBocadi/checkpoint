@@ -35,6 +35,13 @@
 .chat-turn.user { margin-left: auto; background: #e2edcf; }
 .chat-author { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #5c714d; }
 .chat-turn p { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .94rem; margin: 10px 0 0; }
+.chat-markdown { overflow-wrap: anywhere; font-size: .94rem; line-height: 1.7; overflow-x: auto; }
+.chat-markdown p { white-space: normal; }
+.chat-markdown ul, .chat-markdown ol { padding-left: 24px; }
+.chat-markdown li + li { margin-top: 10px; }
+.chat-markdown table { background: white; margin-top: 15px; }
+.chat-markdown th, .chat-markdown td { padding: 10px 12px; font-size: .85rem; }
+.chat-markdown h1, .chat-markdown h2, .chat-markdown h3 { font-size: 1.15rem; letter-spacing: -.02em; margin-top: 20px; }
 .chat-sources { border-top: 1px solid #d5ddcb; margin-top: 18px; padding-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
 .chat-sources > span { width: 100%; font-size: .75rem; color: var(--muted); }
 .chat-sources a { background: white; border: 1px solid #cbd9bc; border-radius: 5px; font-size: .8rem; padding: 6px 10px; }
