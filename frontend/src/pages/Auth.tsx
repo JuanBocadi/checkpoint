@@ -122,8 +122,10 @@ export function Auth({
           <br />
           Guardá tu lugar en Checkpoint.
         </p>
-        <div className="auth-decoration" aria-hidden="true">
-          C<span>+</span>
+        <div className="auth-covers" aria-hidden="true">
+          <img src="/images/games/hades-cover.jpg" alt="" />
+          <img src="/images/games/hollow-knight-cover.jpg" alt="" />
+          <img src="/images/games/stardew-valley-cover.jpg" alt="" />
         </div>
       </div>
       <section className="auth-card">

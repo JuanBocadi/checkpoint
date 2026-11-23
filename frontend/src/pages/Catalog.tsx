@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { useApi } from "../lib/use-api";
 import { genres, platforms, type GameList } from "../schemas/game";
 import { GameCard, Loading, Notice } from "../components/Ui";
+import { DiscoveryHero } from "../components/DiscoveryHero";
+import { Icon } from "../components/Icons";
 
 export function Catalog() {
   const [params, setParams] = useSearchParams();
   const [query, setQuery] = useState(params.get("q") ?? "");
+  const { data: discovery } = useApi<GameList>("/games?limit=50");
   const { data, loading, error } = useApi<GameList>(
     `/games?${params.toString()}`,
   );
@@ -18,46 +21,18 @@ export function Catalog() {
     setParams(next);
   }
   return (
-    <div className="container">
-      <section className="hero">
-        <div className="hero-copy">
-          <p className="eyebrow">
-            <span className="tiny-cross">+</span> Un nuevo punto de partida
-          </p>
-          <h1>
-            Tu próximo
-            <br />
-            gran <span>juego.</span>
-          </h1>
-          <p>
-            Historias para perderse. Mundos por descubrir.
-            <br />
-            Encontrá la próxima aventura que vale tu tiempo.
-          </p>
-          <a className="button light" href="#catalogo">
-            Explorar el catálogo
-          </a>
-          <div className="hero-caption">
-            PARA QUIENES SIEMPRE QUIEREN UNA PARTIDA MÁS
-          </div>
-        </div>
-        <div className="hero-visual" aria-hidden="true">
-          <span className="visual-label">PLAYER ONE / READY</span>
-          <div className="portal">
-            <div className="portal-inner" />
-            <span className="portal-person" />
-          </div>
-          <span className="visual-cross cross-one">+</span>
-          <span className="visual-cross cross-two">+</span>
-          <span className="visual-bottom">DISCOVER. PLAY. REPEAT.</span>
-        </div>
-      </section>
+    <div className="container discovery-page">
+      <div className="discovery-intro">
+        <p>Descubrí. Elegí. Jugá.</p>
+        <span>Tu lugar entre partidas.</span>
+      </div>
+      <DiscoveryHero games={discovery?.data ?? []} />
       <section className="catalog section" id="catalogo">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Elegí tu próxima aventura</p>
+            <p className="eyebrow">Siempre hay algo por descubrir</p>
             <h2>
-              El catálogo<span className="accent">.</span>
+              Encontrá tu próxima partida<span className="accent">.</span>
             </h2>
           </div>
           <span className="muted">
@@ -65,6 +40,25 @@ export function Catalog() {
               ? `${data.pagination.total} videojuegos para descubrir`
               : "Tu próximo checkpoint empieza acá"}
           </span>
+        </div>
+        <div className="genre-chips" role="group" aria-label="Explorar géneros">
+          <button
+            className={!params.get("genre") ? "active" : ""}
+            aria-pressed={!params.get("genre")}
+            onClick={() => filter("genre", "")}
+          >
+            <Icon name="grid" size={16} /> Todos los juegos
+          </button>
+          {genres.map((genre) => (
+            <button
+              key={genre}
+              className={params.get("genre") === genre ? "active" : ""}
+              aria-pressed={params.get("genre") === genre}
+              onClick={() => filter("genre", genre)}
+            >
+              {genre}
+            </button>
+          ))}
         </div>
         <div className="filters">
           <form
@@ -77,7 +71,7 @@ export function Catalog() {
             <label className="sr-only" htmlFor="search">
               Buscar videojuegos
             </label>
-            <span aria-hidden="true">⌕</span>
+            <Icon name="search" />
             <input
               id="search"
               placeholder="Buscar un videojuego…"
@@ -87,18 +81,6 @@ export function Catalog() {
             />
             <button type="submit">Buscar</button>
           </form>
-          <label className="select-filter">
-            <span className="sr-only">Filtrar por género</span>
-            <select
-              value={params.get("genre") ?? ""}
-              onChange={(e) => filter("genre", e.target.value)}
-            >
-              <option value="">Todos los géneros</option>
-              {genres.map((g) => (
-                <option key={g}>{g}</option>
-              ))}
-            </select>
-          </label>
           <label className="select-filter">
             <span className="sr-only">Filtrar por plataforma</span>
             <select
@@ -135,7 +117,7 @@ export function Catalog() {
           </Notice>
         ) : (
           <>
-            <div className="game-grid">
+            <div className="game-grid" aria-label="Videojuegos del catálogo">
               {data.data.map((game) => (
                 <GameCard key={game._id} game={game} />
               ))}
@@ -170,16 +152,21 @@ export function Catalog() {
           </>
         )}
       </section>
-      <aside className="catalog-note">
-        <span className="note-icon">+</span>
-        <div>
-          <h3>Jugar también es descubrir.</h3>
+      <aside className="discovery-assistant">
+        <div className="assistant-art" aria-hidden="true" />
+        <div className="assistant-callout-icon">
+          <Icon name="sparkles" size={27} />
+        </div>
+        <div className="assistant-callout-copy">
+          <p className="eyebrow">Una recomendación a tu medida</p>
+          <h2>Menos buscar. Más jugar.</h2>
           <p>
-            Desde pequeños indies hasta aventuras enormes. Tu próximo favorito
-            puede estar a un clic.
+            Contale al asistente qué te gusta y descubrí tu próximo favorito.
           </p>
         </div>
-        <span className="note-stamp">EST. 2026</span>
+        <Link className="button light" to="/chat">
+          <Icon name="sparkles" size={18} /> Encontrar mi próximo juego
+        </Link>
       </aside>
     </div>
   );

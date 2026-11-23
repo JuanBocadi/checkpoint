@@ -20,6 +20,8 @@ Se verificaron mediante HTTP sobre el frontend publicado: proxy `/api`, catálog
 
 ## Funcionalidades
 
+Actualización visual preparada para revisión local: tema oscuro verde, portadas reales de los seis juegos iniciales, destacados seleccionables, filtros por género, fichas con galería de capturas y juegos relacionados, y una página pública de créditos en `/credits`. Las imágenes se sirven desde `frontend/public/images/games/`; procedencia y titulares en [docs/imagenes.md](docs/imagenes.md). Un título sin material asociado conserva una portada gráfica de respaldo.
+
 - Catálogo público, detalle, búsqueda por título, filtros por género y plataforma y paginación.
 - Registro, login con email/contraseña, login GitHub y cierre de sesión con Better Auth.
 - Sesiones persistidas en MongoDB y consultadas desde React mediante `useSession()`.
@@ -329,4 +331,4 @@ La [verificación automática del ajuste desplegado](https://github.com/JuanBoca
 
 `.gitignore` excluye `.env`, variantes privadas, dependencias y compilados. Ningún secreto de infraestructura pertenece al código: BETTER_AUTH_SECRET, Client Secret de GitHub y URI de Atlas se configuran por entorno. Nunca colocar secretos en variables `VITE_*`, ya que se publican en el navegador. Las contraseñas de prueba anteriores son intencionalmente públicas para la corrección.
 
-Base de referencia: [T-Arias/mdw-2026](https://github.com/T-Arias/mdw-2026), especialmente [clase 13: Better Auth y Render](https://github.com/T-Arias/mdw-2026/tree/main/clase%2013). Se reutilizan el enfoque de autenticación, las capas de protección y el esquema de proxy; la entidad, interfaz y funcionalidad de catálogo se desarrollaron para Checkpoint. Las ilustraciones de portadas son composiciones CSS propias, no carátulas oficiales. Los títulos comerciales se usan como datos de ejemplo.
+Base de referencia: [T-Arias/mdw-2026](https://github.com/T-Arias/mdw-2026), especialmente [clase 13: Better Auth y Render](https://github.com/T-Arias/mdw-2026/tree/main/clase%2013). Se reutilizan el enfoque de autenticación, las capas de protección y el esquema de proxy; la entidad, interfaz y funcionalidad de catálogo se desarrollaron para Checkpoint. Las portadas, ilustraciones y capturas de los seis juegos iniciales proceden de sus fichas oficiales en Steam y conservan los derechos de sus respectivos titulares; se documentan en [docs/imagenes.md](docs/imagenes.md) y `/credits`. La interfaz, el icono de Checkpoint y los gráficos de respaldo son propios. Los títulos comerciales se usan como datos de ejemplo.

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router";
 import { authClient, useSession } from "../lib/auth-client";
+import { Icon } from "./Icons";
 
 export function Layout() {
   const { data: session, isPending } = useSession();
@@ -19,7 +20,7 @@ export function Layout() {
     <>
       <header className="site-header">
         <div className="nav-wrap">
-          <Link to="/" className="brand">
+          <Link to="/" className="brand" aria-label="Checkpoint, inicio">
             <span className="brand-icon">
               C<span>+</span>
             </span>
@@ -30,7 +31,9 @@ export function Layout() {
               Explorar
             </NavLink>
             {session && <NavLink to="/library">Mi biblioteca</NavLink>}
-            <NavLink to="/chat">Asistente</NavLink>
+            <NavLink to="/chat">
+              <Icon name="sparkles" size={16} /> Asistente
+            </NavLink>
             {session?.user.role === "admin" && (
               <NavLink to="/admin">Administrar</NavLink>
             )}
@@ -41,6 +44,9 @@ export function Layout() {
             ) : session ? (
               <>
                 <span className="account-name">
+                  <span className="account-avatar" aria-hidden="true">
+                    {session.user.name.slice(0, 1).toUpperCase()}
+                  </span>
                   {session.user.name}
                   <small>
                     {session.user.role === "admin"
@@ -84,6 +90,7 @@ export function Layout() {
         </Link>
         <span>Siempre hay una próxima partida.</span>
         <Link to="/privacy">Privacidad</Link>
+        <Link to="/credits">Créditos visuales</Link>
         <span>Hecho por Juan · TP Full Stack 2026</span>
       </footer>
     </>

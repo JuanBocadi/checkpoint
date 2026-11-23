@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Link, Route, Routes } from "react-router";
+import { BrowserRouter, Link, Route, Routes, useLocation } from "react-router";
 import { Layout } from "./components/Layout";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Catalog } from "./pages/Catalog";
@@ -12,16 +12,27 @@ import { Users } from "./pages/Users";
 import { Library } from "./pages/Library";
 import { LibraryEditor } from "./pages/LibraryEditor";
 import { Privacy } from "./pages/Privacy";
+import { Credits } from "./pages/Credits";
 import "./styles.css";
 import "./features.css";
+import "./experience.css";
 
 const Chat = React.lazy(async () => ({
   default: (await import("./pages/Chat")).Chat,
 }));
 
+function RouteScroll() {
+  const { pathname } = useLocation();
+  React.useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname]);
+  return null;
+}
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
+      <RouteScroll />
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Catalog />} />
@@ -29,6 +40,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="login" element={<Auth key="login" />} />
           <Route path="register" element={<Auth key="register" register />} />
           <Route path="privacy" element={<Privacy />} />
+          <Route path="credits" element={<Credits />} />
           <Route element={<ProtectedRoute adminOnly={false} />}>
             <Route path="library" element={<Library />} />
             <Route path="library/:id/edit" element={<LibraryEditor />} />

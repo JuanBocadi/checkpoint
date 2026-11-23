@@ -122,7 +122,7 @@ export function Library({ all = false }: { all?: boolean }) {
               <article key={entry._id} className="library-card">
                 {entry.game && (
                   <Link to={`/games/${entry.gameId}`}>
-                    <GameArt game={entry.game} />
+                    <GameArt game={entry.game} landscape />
                   </Link>
                 )}
                 <div className="library-copy">
