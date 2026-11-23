@@ -6,6 +6,8 @@ Aplicación full stack de **Juan Cruz Bocadi** para el TP2 de Metodologías y De
 
 **Backend y frontend publicados en Render y verificados el 23/11/2026.** La API se conecta a MongoDB Atlas. Juan confirmó el acceso real con Google y GitHub desde el frontend publicado; Google está configurado para usuarios externos y publicado en producción.
 
+La [auditoría punto por punto de la consigna](docs/auditoria-consigna.md) relaciona todos los mínimos, los cuatro opcionales, las aclaraciones del profesor y el chatbot con su implementación y sus pruebas. Incluye el alcance de la verificación y el repaso manual adicional pendiente.
+
 La ejecución local principal ya está conectada a MongoDB Atlas, base `checkpoint`, con seis videojuegos iniciales y las cuentas admin/user verificadas. `npm run dev:demo` sigue disponible como alternativa aislada y temporal.
 
 | Entregable | Estado / destino |
@@ -327,7 +329,9 @@ GitHub Actions compila ambos proyectos y ejecuta los tests del backend sin secre
 
 Verificación local del 23/11/2026: ambos builds completados y **23 pruebas aprobadas**. `render.yaml` validado con el JSON Schema oficial de Render (draft 2020-12). La validación estructural no sustituye la revisión del plan ni la prueba del despliegue real.
 
-La [verificación automática del ajuste desplegado](https://github.com/JuanBocadi/checkpoint/actions/runs/45211322592) también compiló ambos proyectos y ejecutó las pruebas correctamente en GitHub Actions. El 23/11/2026 se revisaron 149 blobs del historial alcanzable: no se encontraron los secretos privados configurados ni los patrones de credenciales buscados; `.env` y `.local/` no están versionados. Esta revisión automática tiene el alcance de esos valores y patrones.
+La [verificación automática del ajuste desplegado](https://github.com/JuanBocadi/checkpoint/actions/runs/45211322592) también compiló ambos proyectos y ejecutó las pruebas correctamente en GitHub Actions. En la auditoría posterior del 23/11/2026 se revisaron 195 blobs del historial alcanzable: no se encontraron los secretos privados configurados ni los patrones de credenciales buscados; `.env` y `.local/` no están versionados. Esta revisión automática tiene el alcance de esos valores y patrones.
+
+La auditoría también confirmó los tipos de la entidad, los usuarios y las sesiones almacenados en Atlas; el bloqueo visual de `/admin` para un jugador y la recuperación de su sesión tras F5. Una consulta real a Groq recuperó el juego, las horas y la puntuación de una biblioteca temporal, devolvió su fuente y persistió el historial; otra cuenta no pudo acceder a la conversación. Los recursos temporales se eliminaron al finalizar.
 
 ## Seguridad y referencia académica
 

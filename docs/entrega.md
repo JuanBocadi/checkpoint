@@ -2,6 +2,8 @@
 
 Estado verificado el 23/11/2026. Se distinguen las pruebas confirmadas de un repaso manual adicional de la interfaz. Las comprobaciones HTTP no equivalen a pruebas manuales de formularios.
 
+La [auditoría de la consigna](auditoria-consigna.md) detalla la correspondencia de cada requisito mínimo, opcional y aclaración del profesor con el código y la evidencia disponible.
+
 ## Infraestructura
 
 - [x] Repo propio en GitHub con `backend/`, `frontend/` y varios commits descriptivos.
@@ -40,13 +42,14 @@ Estado verificado el 23/11/2026. Se distinguen las pruebas confirmadas de un rep
 - [x] Login Google completa el flujo en producción, confirmado por Juan.
 - [x] Asistente responde con datos del catálogo y devuelve fuentes enlazables.
 - [x] Historial del chat persiste entre solicitudes y otro usuario, incluso admin, recibe 404 al consultarlo.
+- [x] Consulta real a Groq sobre biblioteca propia devuelve juego, horas y puntuación correctos, con fuente e historial; cuenta y datos temporales eliminados.
 - [x] Cuentas, registros de biblioteca y conversación temporales eliminados al terminar las comprobaciones.
 
 ## Repaso manual adicional de la interfaz
 
 - [ ] Buscar y combinar filtros desde el listado; abrir una ficha y recargarla con F5.
-- [ ] Comprobar la sesión con F5 después de los accesos sociales y por email.
-- [ ] Con user, abrir `/admin` y comprobar el mensaje de falta de permisos.
+- [x] Sesión de Juan recuperada tras F5 en producción; mantiene nombre, rol de jugador y protección del panel. No se repitió un recorrido manual independiente de F5 para cada proveedor.
+- [x] Con la cuenta de jugador de Juan, abrir `/admin` y comprobar **Sin permisos**, también después de F5.
 - [ ] Recorrer formularios de registro, login y videojuegos con datos inválidos.
 - [ ] Recorrer los paneles de usuarios y bibliotecas como admin.
 - [ ] Pedir una recomendación basada en la biblioteca propia y recargar el historial del chat.
@@ -58,7 +61,7 @@ La suite automatizada comprueba permisos, validaciones, sesiones, aislamiento de
 
 - [x] README contiene link real del repo y las dos URLs de Render verificadas.
 - [x] Las cuentas y contraseñas publicadas funcionan en producción.
-- [x] Revisión de 149 blobs del historial alcanzable sin secretos privados conocidos ni patrones de credenciales detectados; `.env` y `.local/` no están versionados.
+- [x] Auditoría actualizada: 195 blobs del historial alcanzable sin secretos privados conocidos ni patrones de credenciales detectados; `.env` y `.local/` no están versionados.
 - [x] `.env.example` está completo, con credenciales vacías.
 - [x] Builds locales y 23 pruebas pasan.
 - [x] Blueprint validado contra el esquema oficial de Render.
