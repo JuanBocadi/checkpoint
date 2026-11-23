@@ -14,7 +14,10 @@ export const auth = betterAuth({
   emailAndPassword: { enabled: true, minPasswordLength: 8, maxPasswordLength: 128 },
   socialProviders: {
     github: { clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET },
+    ...(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET ? {
+      google: { clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET },
+    } : {}),
   },
-  account: { accountLinking: { trustedProviders: ['github'] } },
+  account: { accountLinking: { trustedProviders: ['github', 'google'] } },
   plugins: [admin({ defaultRole: 'user', adminRoles: ['admin'] })],
 });

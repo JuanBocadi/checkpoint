@@ -9,6 +9,14 @@ const schema = z.object({
   BETTER_AUTH_URL: z.url().transform(value => value.replace(/\/$/, '')),
   GITHUB_CLIENT_ID: z.string().min(1),
   GITHUB_CLIENT_SECRET: z.string().min(1),
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  GOOGLE_CLIENT_SECRET: z.string().optional(),
+  GROQ_API_KEY: z.string().optional(),
+  GROQ_MODEL: z.preprocess(value => value || undefined, z.string().min(1).default('openai/gpt-oss-20b')),
+}).superRefine((value, ctx) => {
+  if (!!value.GOOGLE_CLIENT_ID !== !!value.GOOGLE_CLIENT_SECRET) {
+    ctx.addIssue({ code: 'custom', path: ['GOOGLE_CLIENT_ID'], message: 'Configurá ambas credenciales de Google o dejá ambas vacías.' });
+  }
 });
 
 const parsed = schema.safeParse(process.env);
