@@ -29,7 +29,7 @@ Completar las variables privadas en Environment. El secreto de Better Auth se ge
 1. Abrir https://console.cloud.google.com/ con la cuenta de Juan y crear el proyecto `Checkpoint`.
 2. En Google Auth Platform, configurar nombre, email de soporte y audiencia External.
 3. Crear un cliente OAuth **Web application**.
-4. Agregar los orígenes de frontend local y producción y sus callbacks `/api/auth/callback/google`.
+4. Para el proyecto de desarrollo, agregar `http://localhost:5173` y su callback `/api/auth/callback/google`. Para la publicación, crear un proyecto y cliente de producción separado y usar únicamente el origen HTTPS y callback reales de Render.
 5. Guardar Client ID y Client Secret en el backend.
 6. En Audience, publicar **In production**, cumpliendo los requisitos que solicite Google. Probar con una cuenta que no sea tester.
 
@@ -38,6 +38,8 @@ El usuario debe completar personalmente cualquier aceptación de términos o ver
 En la creación del cliente, dejar desmarcada la opción para agentes de IA: este cliente se usa para autenticación. El chatbot usa Groq de forma independiente.
 
 Google solo muestra el secreto completo al crearlo. Guardarlo de inmediato en el entorno privado. Si se cerró el diálogo y no se conservó, abrir Clientes → Checkpoint Web → Agregar secreto y guardar el nuevo. No subir el JSON de credenciales al repositorio. Referencia: [Administrar clientes OAuth](https://support.google.com/cloud/answer/15549257?hl=es).
+
+El login local con Google fue completado y confirmado por Juan el 23/11/2026. El login público de producción se debe verificar después del deploy. Google documenta la separación entre entornos en sus [políticas OAuth](https://developers.google.com/identity/protocols/oauth2/policies).
 
 ## Groq
 

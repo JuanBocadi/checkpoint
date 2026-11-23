@@ -12,6 +12,7 @@ Aplicación full stack de **Juan Cruz Bocadi** para el TP2 de Metodologías y De
 | Frontend en Render | Pendiente: `https://checkpoint-juanbocadi.onrender.com` |
 | Backend en Render | Pendiente: `https://checkpoint-api-juanbocadi.onrender.com` |
 | Login GitHub en producción | Pendiente de configurar y probar OAuth con las URLs definitivas |
+| Login Google | Probado en local por Juan; pendiente de configuración y prueba en producción |
 
 ## Funcionalidades
 
@@ -267,12 +268,14 @@ El callback apunta al **frontend** y atraviesa el proxy `/api`. Guardar el Clien
 
 ### Google OAuth para cualquier cuenta
 
-En [Google Cloud Console](https://console.cloud.google.com/), crear un proyecto, configurar Google Auth Platform para usuarios **External** y crear un cliente OAuth de tipo **Web application**. Agregar orígenes del frontend y callbacks:
+En [Google Cloud Console](https://console.cloud.google.com/), configurar Google Auth Platform para usuarios **External** y crear un cliente OAuth de tipo **Web application**. Mantener proyectos y clientes separados para desarrollo y producción, como indica la política de Google. Configurar el origen y callback de cada entorno en su cliente correspondiente:
 
 - Local: `http://localhost:5173/api/auth/callback/google`.
 - Producción: `https://<frontend-real>.onrender.com/api/auth/callback/google`.
 
 Se solicitan únicamente los datos de identidad habituales (openid, email y profile). Configurar Client ID/Secret en el backend. Cambiar el estado de Audience a **In production** y completar los requisitos que Google solicite; dejarlo en Testing, limitado a testers, no cumple el opcional del profesor. Probar con una cuenta que no figure como tester. Configuración detallada en `docs/conexiones.md`.
+
+El 23/11/2026 Juan confirmó que completó el inicio de sesión con Google y regresó correctamente a la demo local. La aplicación no tiene una lista de emails permitidos: las nuevas cuentas sociales reciben el rol `user`. El estado de publicación y las políticas de Google determinan el acceso externo; se verificará de nuevo con la URL de producción.
 
 ### Biblioteca personal
 

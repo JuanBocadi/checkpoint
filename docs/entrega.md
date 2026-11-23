@@ -47,6 +47,8 @@ Esta lista registra tareas de publicación pendientes; no confirma que ya estén
 - [x] `.env.example` está completo, con credenciales vacías.
 - [x] Builds locales y 23 pruebas pasan.
 - [x] Blueprint validado contra el esquema oficial de Render.
+- [x] Login local con Google completado y confirmado por Juan.
+- [x] Chatbot local probado con Groq real y fuentes del catálogo.
 
 ## Entrega al profesor
 
