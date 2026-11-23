@@ -11,7 +11,7 @@ Aplicación full stack de **Juan Cruz Bocadi** para el TP2 de Metodologías y De
 | Repositorio GitHub | [JuanBocadi/checkpoint](https://github.com/JuanBocadi/checkpoint) — código publicado |
 | Frontend en Render | Pendiente: `https://checkpoint-juanbocadi.onrender.com` |
 | Backend en Render | Pendiente: `https://checkpoint-api-juanbocadi.onrender.com` |
-| Login GitHub en producción | Pendiente de configurar y probar OAuth con las URLs definitivas |
+| Login GitHub | Probado en local por Juan; pendiente de configuración y prueba en producción |
 | Login Google | Probado en local por Juan; pendiente de configuración y prueba en producción |
 
 ## Funcionalidades
@@ -228,7 +228,7 @@ Errores de la API propia: `{ "error": { "message": "…", "issues": [{ "field": 
 
 1. Crear un repositorio propio en GitHub y subir el historial local de commits. No subir `.env`, dependencias o archivos compilados.
 2. En Atlas crear un clúster, una base `checkpoint` y un usuario de base con permisos sobre esa base. Autorizar en Network Access las IP de salida informadas por el servicio Render y la IP local necesaria para ejecutar el seed. Copiar la URI privada solamente a `.env` y Render. No incluirla en el README ni en commits.
-3. Crear una **OAuth App de GitHub de producción**. Se necesita otra distinta para desarrollo porque cada OAuth App tiene un callback.
+3. Crear una **OAuth App de GitHub de producción** separada de la de desarrollo para mantener las credenciales y URLs de cada entorno independientes.
 4. En Render, **New → Blueprint**, elegir el repo y revisar `render.yaml`. Alternativamente crear ambos servicios manualmente con esta tabla:
 
 | Configuración | Backend | Frontend |
@@ -265,6 +265,8 @@ En GitHub: Settings → Developer settings → OAuth Apps.
 | Callback URL | `http://localhost:5173/api/auth/callback/github` | `https://<frontend-real>.onrender.com/api/auth/callback/github` |
 
 El callback apunta al **frontend** y atraviesa el proxy `/api`. Guardar el Client Secret solo en `.env` o en Environment de Render. Better Auth guarda usuarios, cuentas OAuth, sesiones y verificaciones en las colecciones `user`, `account`, `session` y `verification` de MongoDB. El plugin admin agrega el campo de rol.
+
+El 23/11/2026 Juan confirmó que completó el inicio de sesión con GitHub y regresó correctamente a la demo local.
 
 ### Google OAuth para cualquier cuenta
 
