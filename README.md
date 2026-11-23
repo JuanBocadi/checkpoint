@@ -4,7 +4,7 @@ Aplicación full stack de **Juan Cruz Bocadi** para el TP2 de Metodologías y De
 
 ## Entrega y estado del despliegue
 
-**Backend y frontend publicados en Render y verificados el 23/11/2026.** La API se conecta a MongoDB Atlas. Google ya está publicado para usuarios externos; queda pendiente la prueba completa de los accesos sociales en producción.
+**Backend y frontend publicados en Render y verificados el 23/11/2026.** La API se conecta a MongoDB Atlas. Juan confirmó el acceso real con Google y GitHub desde el frontend publicado; Google está configurado para usuarios externos y publicado en producción.
 
 La ejecución local principal ya está conectada a MongoDB Atlas, base `checkpoint`, con seis videojuegos iniciales y las cuentas admin/user verificadas. `npm run dev:demo` sigue disponible como alternativa aislada y temporal.
 
@@ -13,10 +13,10 @@ La ejecución local principal ya está conectada a MongoDB Atlas, base `checkpoi
 | Repositorio GitHub | [JuanBocadi/checkpoint](https://github.com/JuanBocadi/checkpoint) — código publicado |
 | Frontend en Render | [checkpoint-juanbocadi.onrender.com](https://checkpoint-juanbocadi.onrender.com) — activo |
 | Backend en Render | [checkpoint-api-juanbocadi.onrender.com](https://checkpoint-api-juanbocadi.onrender.com) — activo; `/api/health` responde 200 |
-| Login GitHub | Credenciales y callback de producción configurados; pendiente de completar el login en el navegador |
-| Login Google | Credenciales y callback configurados, audiencia en producción; pendiente de completar el login en el navegador |
+| Login GitHub | Funciona en producción; confirmado por Juan |
+| Login Google | Funciona en producción; confirmado por Juan, audiencia externa en producción |
 
-Se verificaron mediante HTTP sobre el frontend publicado: proxy `/api`, catálogo y paginación, detalle, login de ambas cuentas de corrección, sesión persistida, logout, permisos 401/403, validaciones 400, recurso inexistente 404, CRUD de videojuegos, biblioteca propia y restricciones de acceso global. El asistente respondió usando Groq y herramientas del catálogo; su historial persistió y fue inaccesible para otro usuario, incluso admin. Los registros temporales de comprobación se eliminaron. Las rutas `/privacy`, `/login`, `/admin`, `/admin/users`, `/admin/library`, `/library` y `/chat` devuelven la SPA al solicitarlas directamente. Estas comprobaciones no sustituyen la prueba manual de OAuth ni de los formularios en el navegador.
+Se verificaron mediante HTTP sobre el frontend publicado: proxy `/api`, catálogo y paginación, detalle, registro con rol `user`, login de ambas cuentas de corrección, sesión persistida, logout, permisos 401/403, validaciones 400, recurso inexistente 404 y CRUD de videojuegos. Se verificaron también la creación de usuarios por admin, los cambios de rol, la gestión global de bibliotecas y el rechazo de lectura, edición o eliminación de registros ajenos por otro `user`. El asistente respondió usando Groq y herramientas del catálogo; su historial persistió y fue inaccesible para otro usuario, incluso admin. Los registros y cuentas temporales de comprobación se eliminaron. Las rutas `/privacy`, `/login`, `/admin`, `/admin/users`, `/admin/library`, `/library` y `/chat` devuelven la SPA al solicitarlas directamente. La revisión manual de los formularios y la navegación está detallada en `docs/entrega.md`.
 
 ## Funcionalidades
 
@@ -34,7 +34,7 @@ Se verificaron mediante HTTP sobre el frontend publicado: proxy `/api`, catálog
 - Formularios de registro, login y videojuegos con React Hook Form y Zod.
 - Validaciones de cuerpo y consultas, errores claros, estados vacíos y confirmación de eliminación.
 
-El catálogo de videojuegos conserva los permisos mínimos: `user` solo lee y `admin` hace ABM. El opcional de registros propios se aplica a la biblioteca personal: `user` crea, consulta, edita y elimina sus registros; `admin` puede gestionar todos. Las conversaciones del asistente son privadas para su dueño, incluso frente al administrador. Groq ya fue verificado en producción; Google está publicado y conserva pendiente la prueba completa de acceso social.
+El catálogo de videojuegos conserva los permisos mínimos: `user` solo lee y `admin` hace ABM. El opcional de registros propios se aplica a la biblioteca personal: `user` crea, consulta, edita y elimina sus registros; `admin` puede gestionar todos. Las conversaciones del asistente son privadas para su dueño, incluso frente al administrador. Google, GitHub y Groq fueron verificados en producción.
 
 ## Stack y estructura
 
@@ -259,7 +259,7 @@ El primer rewrite mantiene autenticación y cookies bajo el dominio del frontend
 8. Completar la OAuth App y ejecutar el seed contra Atlas con las cuentas de corrección. Puede ejecutarse desde local con un `.env` privado apuntando a la base de producción; el script no necesita crear un servicio adicional ni exponer contraseñas por HTTP.
 9. Verificar el despliegue siguiendo `docs/entrega.md` y actualizar esta sección con las URLs y resultados reales.
 
-`npm start` da 2000 ms a cada intento de selección de familia de red de Node. El primer intento de Google OAuth en Render falló con `fetch failed` y `AggregateError [ETIMEDOUT]`, sin respuesta de rechazo de Google. Este margen reduce los cortes prematuros descritos en el [problema de conectividad de Node](https://github.com/nodejs/node/issues/54359); conserva IPv4/IPv6 y la validación TLS. El cambio requiere un nuevo despliegue y una nueva prueba completa de OAuth.
+`npm start` da 2000 ms a cada intento de selección de familia de red de Node para reducir los cortes prematuros descritos en el [problema de conectividad de Node](https://github.com/nodejs/node/issues/54359). Conserva IPv4/IPv6 y la validación TLS. El arranque con esta opción y el login real con Google se verificaron en Render.
 
 ### GitHub OAuth
 
@@ -272,7 +272,7 @@ En GitHub: Settings → Developer settings → OAuth Apps.
 
 El callback apunta al **frontend** y atraviesa el proxy `/api`. Guardar el Client Secret solo en `.env` o en Environment de Render. Better Auth guarda usuarios, cuentas OAuth, sesiones y verificaciones en las colecciones `user`, `account`, `session` y `verification` de MongoDB. El plugin admin agrega el campo de rol.
 
-El 23/11/2026 Juan confirmó que completó el inicio de sesión con GitHub y regresó correctamente a la demo local.
+El 23/11/2026 Juan confirmó que completó el inicio de sesión con GitHub tanto en local como en el frontend publicado en Render.
 
 ### Google OAuth para cualquier cuenta
 
@@ -281,9 +281,9 @@ En [Google Cloud Console](https://console.cloud.google.com/), configurar Google 
 - Local: `http://localhost:5173/api/auth/callback/google`.
 - Producción: `https://<frontend-real>.onrender.com/api/auth/callback/google`.
 
-Se solicitan únicamente los datos de identidad habituales (openid, email y profile). Configurar Client ID/Secret en el backend. Cambiar el estado de Audience a **In production** y completar los requisitos que Google solicite; dejarlo en Testing, limitado a testers, no cumple el opcional del profesor. Probar con una cuenta que no figure como tester. Configuración detallada en `docs/conexiones.md`.
+Se solicitan únicamente los datos de identidad habituales (openid, email y profile). Configurar Client ID/Secret en el backend. Para la entrega, mantener Audience en **In production** y usuarios **External**, cumpliendo los requisitos que Google solicite. Comprobar adicionalmente el ingreso con una cuenta ajena al proyecto. Configuración detallada en `docs/conexiones.md`.
 
-El 23/11/2026 Juan confirmó que completó el inicio de sesión con Google y regresó correctamente a la demo local. La aplicación no tiene una lista de emails permitidos: las nuevas cuentas sociales reciben el rol `user`. El estado de publicación y las políticas de Google determinan el acceso externo; se verificará de nuevo con la URL de producción.
+El 23/11/2026 Juan confirmó que completó el inicio de sesión con Google tanto en local como en el frontend publicado en Render. La aplicación no tiene una lista de emails permitidos: las nuevas cuentas sociales reciben el rol `user`. La audiencia externa y el estado de producción quedaron confirmados en Google Auth Platform. No se realizó una prueba adicional con una cuenta ajena al proyecto.
 
 ### Biblioteca personal
 
@@ -322,6 +322,8 @@ La suite de integración crea replica sets MongoDB temporales, inicia Express y 
 GitHub Actions compila ambos proyectos y ejecuta los tests del backend sin secretos de repositorio.
 
 Verificación local del 23/11/2026: ambos builds completados y **23 pruebas aprobadas**. `render.yaml` validado con el JSON Schema oficial de Render (draft 2020-12). La validación estructural no sustituye la revisión del plan ni la prueba del despliegue real.
+
+La [verificación automática del ajuste desplegado](https://github.com/JuanBocadi/checkpoint/actions/runs/45211322592) también compiló ambos proyectos y ejecutó las pruebas correctamente en GitHub Actions. El 23/11/2026 se revisaron 149 blobs del historial alcanzable: no se encontraron los secretos privados configurados ni los patrones de credenciales buscados; `.env` y `.local/` no están versionados. Esta revisión automática tiene el alcance de esos valores y patrones.
 
 ## Seguridad y referencia académica
 

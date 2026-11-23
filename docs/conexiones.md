@@ -1,6 +1,6 @@
 # Conexiones necesarias para completar la publicación
 
-Las cuentas y los secretos son de Juan. No enviar claves por el chat ni ponerlas en commits. Backend y frontend publicados en Render el 23/11/2026, con Atlas y Groq verificados. Las instrucciones siguientes sirven como referencia de configuración; queda pendiente completar y probar OAuth en producción.
+Las cuentas y los secretos son de Juan. No enviar claves por el chat ni ponerlas en commits. Backend y frontend publicados en Render el 23/11/2026, con Atlas y Groq verificados. Juan confirmó el login real con Google y GitHub en producción. Las instrucciones siguientes sirven como referencia para reproducir la configuración.
 
 ## GitHub
 
@@ -26,7 +26,7 @@ Completar las variables privadas en Environment. El secreto de Better Auth se ge
 
 ## Google Cloud
 
-Proyecto de producción: `Checkpoint Produccion`. En Información de marca, la página principal es `https://checkpoint-juanbocadi.onrender.com` y la política de privacidad es `https://checkpoint-juanbocadi.onrender.com/privacy`. Ambas rutas responden 200. El estado de Público se confirmó como **En producción** el 23/11/2026. Queda pendiente completar el login y comprobarlo con una cuenta ajena a los testers.
+Proyecto de producción: `Checkpoint Produccion`. En Información de marca, la página principal es `https://checkpoint-juanbocadi.onrender.com` y la política de privacidad es `https://checkpoint-juanbocadi.onrender.com/privacy`. Ambas rutas responden 200. El estado de Público se confirmó como **En producción** el 23/11/2026 y Juan completó el login desde el frontend publicado. Como comprobación manual adicional, ingresar con una cuenta ajena al proyecto.
 
 1. Abrir https://console.cloud.google.com/ con la cuenta de Juan y crear el proyecto `Checkpoint`.
 2. En Google Auth Platform, configurar nombre, email de soporte y audiencia External.
@@ -41,7 +41,7 @@ En la creación del cliente, dejar desmarcada la opción para agentes de IA: est
 
 Google solo muestra el secreto completo al crearlo. Guardarlo de inmediato en el entorno privado. Si se cerró el diálogo y no se conservó, abrir Clientes → Checkpoint Web → Agregar secreto y guardar el nuevo. No subir el JSON de credenciales al repositorio. Referencia: [Administrar clientes OAuth](https://support.google.com/cloud/answer/15549257?hl=es).
 
-El login local con Google fue completado y confirmado por Juan el 23/11/2026. El login público de producción se debe verificar después del deploy. Google documenta la separación entre entornos en sus [políticas OAuth](https://developers.google.com/identity/protocols/oauth2/policies).
+El login con Google fue completado y confirmado por Juan en local y en producción el 23/11/2026. Google documenta la separación entre entornos en sus [políticas OAuth](https://developers.google.com/identity/protocols/oauth2/policies).
 
 ## Groq
 
