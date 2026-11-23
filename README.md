@@ -2,29 +2,19 @@
 
 Aplicación full stack de **Juan Cruz Bocadi** para el TP2 de Metodologías y Desarrollos Web. Checkpoint es un catálogo de videojuegos: cualquier visitante puede explorar, buscar y consultar detalles. Los administradores mantienen el catálogo y gestionan roles.
 
-## Entrega y estado del despliegue
+## Enlaces
 
-**Backend y frontend publicados en Render y verificados el 23/11/2026.** La API se conecta a MongoDB Atlas. Juan confirmó el acceso real con Google y GitHub desde el frontend publicado; Google está configurado para usuarios externos y publicado en producción.
-
-La [auditoría punto por punto de la consigna](docs/auditoria-consigna.md) relaciona todos los mínimos, los cuatro opcionales, las aclaraciones del profesor y el chatbot con su implementación y sus pruebas. Incluye el alcance de la verificación y el repaso manual adicional pendiente.
-
-La ejecución local principal ya está conectada a MongoDB Atlas, base `checkpoint`, con seis videojuegos iniciales y las cuentas admin/user verificadas. `npm run dev:demo` sigue disponible como alternativa aislada y temporal.
-
-| Entregable | Estado / destino |
+| Recurso | URL |
 | --- | --- |
-| Repositorio GitHub | [JuanBocadi/checkpoint](https://github.com/JuanBocadi/checkpoint) — código publicado |
-| Frontend en Render | [checkpoint-juanbocadi.onrender.com](https://checkpoint-juanbocadi.onrender.com) — activo |
-| Backend en Render | [checkpoint-api-juanbocadi.onrender.com](https://checkpoint-api-juanbocadi.onrender.com) — activo; `/api/health` responde 200 |
-| Login GitHub | Funciona en producción; confirmado por Juan |
-| Login Google | Funciona en producción; confirmado por Juan, audiencia externa en producción |
+| Repositorio GitHub | [JuanBocadi/checkpoint](https://github.com/JuanBocadi/checkpoint) |
+| Frontend en Render | [checkpoint-juanbocadi.onrender.com](https://checkpoint-juanbocadi.onrender.com) |
+| Backend en Render | [checkpoint-api-juanbocadi.onrender.com](https://checkpoint-api-juanbocadi.onrender.com) |
 
-Se verificaron mediante HTTP sobre el frontend publicado: proxy `/api`, catálogo y paginación, detalle, registro con rol `user`, login de ambas cuentas de corrección, sesión persistida, logout, permisos 401/403, validaciones 400, recurso inexistente 404 y CRUD de videojuegos. Se verificaron también la creación de usuarios por admin, los cambios de rol, la gestión global de bibliotecas y el rechazo de lectura, edición o eliminación de registros ajenos por otro `user`. El asistente respondió usando Groq y herramientas del catálogo; su historial persistió y fue inaccesible para otro usuario, incluso admin. Los registros y cuentas temporales de comprobación se eliminaron. Las rutas `/privacy`, `/login`, `/admin`, `/admin/users`, `/admin/library`, `/library` y `/chat` devuelven la SPA al solicitarlas directamente. La revisión manual de los formularios y la navegación está detallada en `docs/entrega.md`.
+La API utiliza MongoDB Atlas, base `checkpoint`, con seis videojuegos iniciales. Los accesos con GitHub y Google están habilitados en producción.
 
 ## Funcionalidades
 
-La interfaz incluye tema oscuro verde, portadas reales de los seis juegos iniciales, destacados seleccionables, filtros por género, fichas con galería de capturas y juegos relacionados, y una página pública de créditos en `/credits`. Las imágenes se sirven desde `frontend/public/images/games/`; procedencia y titulares en [docs/imagenes.md](docs/imagenes.md). Un título sin material asociado conserva una portada gráfica de respaldo. El rediseño se compiló y se revisó en navegador de escritorio y en una vista móvil de 360 px, incluidos el selector de destacados, el filtro de indies y la galería de capturas.
-
-El rediseño se publicó en Render el 23/11/2026 desde el commit `293bd7b`. Se verificó que el JavaScript, el CSS y las 24 imágenes servidos por la URL pública coinciden con el build revisado. También se comprobaron las rutas internas, los créditos, el catálogo, la salud del backend y el login de ambas cuentas de corrección. La [verificación automática de esta versión](https://github.com/JuanBocadi/checkpoint/actions/runs/45217419455) completó los builds y las pruebas correctamente.
+La interfaz incluye tema oscuro verde, portadas reales de los seis juegos iniciales, destacados seleccionables, filtros por género, fichas con galería de capturas y juegos relacionados, y una página pública de créditos en `/credits`. Las imágenes se sirven desde `frontend/public/images/games/`; procedencia y titulares en [docs/imagenes.md](docs/imagenes.md). Un título sin material asociado conserva una portada gráfica de respaldo.
 
 - Catálogo público, detalle, búsqueda por título, filtros por género y plataforma y paginación.
 - Registro, login con email/contraseña, login GitHub y cierre de sesión con Better Auth.
@@ -40,7 +30,7 @@ El rediseño se publicó en Render el 23/11/2026 desde el commit `293bd7b`. Se v
 - Formularios de registro, login y videojuegos con React Hook Form y Zod.
 - Validaciones de cuerpo y consultas, errores claros, estados vacíos y confirmación de eliminación.
 
-El catálogo de videojuegos conserva los permisos mínimos: `user` solo lee y `admin` hace ABM. El opcional de registros propios se aplica a la biblioteca personal: `user` crea, consulta, edita y elimina sus registros; `admin` puede gestionar todos. Las conversaciones del asistente son privadas para su dueño, incluso frente al administrador. Google, GitHub y Groq fueron verificados en producción.
+En el catálogo de videojuegos, `user` solo lee y `admin` hace ABM. En la biblioteca personal, `user` crea, consulta, edita y elimina sus registros; `admin` puede gestionar todos. Las conversaciones del asistente son privadas para su dueño, incluso frente al administrador.
 
 ## Stack y estructura
 
@@ -160,7 +150,7 @@ Estas credenciales son **públicas y exclusivas de demostración/corrección**, 
 | admin | `admin@checkpoint.test` | `AdminCheckpoint2026!` |
 | user | `user@checkpoint.test` | `UserCheckpoint2026!` |
 
-Las cuentas existen en la demo temporal y fueron creadas en la base `checkpoint` de Atlas. El 23/11/2026 se verificó el login de ambas a través del backend local y del proxy `/api` del frontend publicado en Render, con roles `admin` y `user` respectivamente. Para reproducir la carga en otra base, completar las cuatro variables `SEED_*` con estos valores y ejecutar `npm run seed`.
+Las cuentas están disponibles en producción y en la demo temporal. Para crearlas en otra base, completar las cuatro variables `SEED_*` con estos valores y ejecutar `npm run seed`.
 
 ## API
 
@@ -263,9 +253,9 @@ Errores de la API propia: `{ "error": { "message": "…", "issues": [{ "field": 
 El primer rewrite mantiene autenticación y cookies bajo el dominio del frontend. El segundo permite F5 en `/games/:id`, `/login`, `/admin` y demás rutas de React.
 
 8. Completar la OAuth App y ejecutar el seed contra Atlas con las cuentas de corrección. Puede ejecutarse desde local con un `.env` privado apuntando a la base de producción; el script no necesita crear un servicio adicional ni exponer contraseñas por HTTP.
-9. Verificar el despliegue siguiendo `docs/entrega.md` y actualizar esta sección con las URLs y resultados reales.
+9. Comprobar `/api/health`, el login y la recarga de las rutas internas desde la URL del frontend.
 
-`npm start` da 2000 ms a cada intento de selección de familia de red de Node para reducir los cortes prematuros descritos en el [problema de conectividad de Node](https://github.com/nodejs/node/issues/54359). Conserva IPv4/IPv6 y la validación TLS. El arranque con esta opción y el login real con Google se verificaron en Render.
+`npm start` da 2000 ms a cada intento de selección de familia de red de Node para reducir los cortes prematuros descritos en el [problema de conectividad de Node](https://github.com/nodejs/node/issues/54359). Conserva IPv4/IPv6 y la validación TLS.
 
 ### GitHub OAuth
 
@@ -278,8 +268,6 @@ En GitHub: Settings → Developer settings → OAuth Apps.
 
 El callback apunta al **frontend** y atraviesa el proxy `/api`. Guardar el Client Secret solo en `.env` o en Environment de Render. Better Auth guarda usuarios, cuentas OAuth, sesiones y verificaciones en las colecciones `user`, `account`, `session` y `verification` de MongoDB. El plugin admin agrega el campo de rol.
 
-El 23/11/2026 Juan confirmó que completó el inicio de sesión con GitHub tanto en local como en el frontend publicado en Render.
-
 ### Google OAuth para cualquier cuenta
 
 En [Google Cloud Console](https://console.cloud.google.com/), configurar Google Auth Platform para usuarios **External** y crear un cliente OAuth de tipo **Web application**. Mantener proyectos y clientes separados para desarrollo y producción, como indica la política de Google. Configurar el origen y callback de cada entorno en su cliente correspondiente:
@@ -287,9 +275,7 @@ En [Google Cloud Console](https://console.cloud.google.com/), configurar Google 
 - Local: `http://localhost:5173/api/auth/callback/google`.
 - Producción: `https://<frontend-real>.onrender.com/api/auth/callback/google`.
 
-Se solicitan únicamente los datos de identidad habituales (openid, email y profile). Configurar Client ID/Secret en el backend. Para la entrega, mantener Audience en **In production** y usuarios **External**, cumpliendo los requisitos que Google solicite. Comprobar adicionalmente el ingreso con una cuenta ajena al proyecto. Configuración detallada en `docs/conexiones.md`.
-
-El 23/11/2026 Juan confirmó que completó el inicio de sesión con Google tanto en local como en el frontend publicado en Render. La aplicación no tiene una lista de emails permitidos: las nuevas cuentas sociales reciben el rol `user`. La audiencia externa y el estado de producción quedaron confirmados en Google Auth Platform. No se realizó una prueba adicional con una cuenta ajena al proyecto.
+Se solicitan los datos de identidad openid, email y profile. Configurar Client ID/Secret en el backend y mantener Audience en **In production** con usuarios **External**. En Información de marca, usar la URL del frontend como página principal y `/privacy` como política de privacidad. La aplicación no tiene una lista de emails permitidos: las nuevas cuentas sociales reciben el rol `user`.
 
 ### Biblioteca personal
 
@@ -308,9 +294,9 @@ El agente `createAgent` usa `ChatGroq` y dos herramientas de lectura: `search_ca
 
 El chat conserva hasta 40 mensajes por conversación y envía al modelo las últimas 12 intervenciones como contexto. Tiene timeout, cancelación al abandonar la página, bloqueo de envíos simultáneos por conversación y límite de 10 solicitudes cada 10 minutos por usuario, persistido en MongoDB con limpieza TTL. No registra claves ni contenido de mensajes en logs. Las notas personales de la biblioteca no se envían al modelo.
 
-Sin clave o ante errores del proveedor devuelve 503 y la interfaz lo comunica; no se simulan respuestas de IA. Los tests sustituyen el proveedor externo de manera explícita para verificar permisos, persistencia y errores sin consumir cuota; además prueban el ciclo de herramientas con el modelo de prueba oficial de LangChain. El 23/11/2026 se verificó una consulta real con Groq en local: recuperó los indies de menos de USD 20 desde MongoDB, respondió con sus precios y devolvió las fuentes consultadas. También se verificó en producción una recomendación con herramientas del catálogo, fuentes e historial persistido.
+Sin clave o ante errores del proveedor devuelve 503 y la interfaz lo comunica. Los tests sustituyen el proveedor externo de manera explícita para verificar permisos, persistencia y errores sin consumir cuota; además prueban el ciclo de herramientas con el modelo de prueba oficial de LangChain.
 
-## Verificación
+## Compilación y pruebas
 
 ```powershell
 cd backend
@@ -326,12 +312,6 @@ npm run build
 La suite de integración crea replica sets MongoDB temporales, inicia Express y hace solicitudes HTTP reales. Comprueba lectura pública; registro y rol por defecto; rechazo de escalamiento; sesiones; HTTP 401/403; creación 201; validaciones; filtros/paginación; PATCH; 400/404; DELETE 204; creación de usuarios y roles; revocación al salir; bibliotecas privadas; aislamiento de conversaciones; callbacks OAuth; ciclo de herramientas de LangChain; errores y límites de chat. No usa datos de Atlas ni credenciales externas. Los logins OAuth reales, el proveedor Groq y los rewrites de Render deben probarse después de configurar y desplegar.
 
 GitHub Actions compila ambos proyectos y ejecuta los tests del backend sin secretos de repositorio.
-
-Verificación local del 23/11/2026: ambos builds completados y **23 pruebas aprobadas**. `render.yaml` validado con el JSON Schema oficial de Render (draft 2020-12). La validación estructural no sustituye la revisión del plan ni la prueba del despliegue real.
-
-La [verificación automática del ajuste desplegado](https://github.com/JuanBocadi/checkpoint/actions/runs/45211322592) también compiló ambos proyectos y ejecutó las pruebas correctamente en GitHub Actions. En la auditoría posterior del 23/11/2026 se revisaron 195 blobs del historial alcanzable: no se encontraron los secretos privados configurados ni los patrones de credenciales buscados; `.env` y `.local/` no están versionados. Esta revisión automática tiene el alcance de esos valores y patrones.
-
-La auditoría también confirmó los tipos de la entidad, los usuarios y las sesiones almacenados en Atlas; el bloqueo visual de `/admin` para un jugador y la recuperación de su sesión tras F5. Una consulta real a Groq recuperó el juego, las horas y la puntuación de una biblioteca temporal, devolvió su fuente y persistió el historial; otra cuenta no pudo acceder a la conversación. Los recursos temporales se eliminaron al finalizar.
 
 ## Seguridad y referencia académica
 
