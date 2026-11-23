@@ -4,11 +4,11 @@ Aplicación full stack de **Juan Cruz Bocadi** para el TP2 de Metodologías y De
 
 ## Entrega y estado del despliegue
 
-**La implementación local está preparada. La publicación todavía está pendiente.** Las direcciones siguientes son los nombres propuestos en `render.yaml`; se deben reemplazar por las URLs reales confirmadas al publicar. No son evidencia de un despliegue activo.
+**El código está publicado en GitHub y la demo local está preparada. El despliegue en Render todavía está pendiente.** Las direcciones de Render siguientes son los nombres propuestos en `render.yaml`; se deben reemplazar por las URLs reales confirmadas al publicar. No son evidencia de un despliegue activo.
 
 | Entregable | Estado / destino propuesto |
 | --- | --- |
-| Repositorio GitHub | [JuanBocadi/checkpoint](https://github.com/JuanBocadi/checkpoint) — creado; publicación del código en proceso |
+| Repositorio GitHub | [JuanBocadi/checkpoint](https://github.com/JuanBocadi/checkpoint) — código publicado |
 | Frontend en Render | Pendiente: `https://checkpoint-juanbocadi.onrender.com` |
 | Backend en Render | Pendiente: `https://checkpoint-api-juanbocadi.onrender.com` |
 | Login GitHub en producción | Pendiente de configurar y probar OAuth con las URLs definitivas |
@@ -309,6 +309,8 @@ npm run build
 La suite de integración crea replica sets MongoDB temporales, inicia Express y hace solicitudes HTTP reales. Comprueba lectura pública; registro y rol por defecto; rechazo de escalamiento; sesiones; HTTP 401/403; creación 201; validaciones; filtros/paginación; PATCH; 400/404; DELETE 204; creación de usuarios y roles; revocación al salir; bibliotecas privadas; aislamiento de conversaciones; callbacks OAuth; ciclo de herramientas de LangChain; errores y límites de chat. No usa datos de Atlas ni credenciales externas. Los logins OAuth reales, el proveedor Groq y los rewrites de Render deben probarse después de configurar y desplegar.
 
 GitHub Actions compila ambos proyectos y ejecuta los tests del backend sin secretos de repositorio.
+
+Verificación local del 23/11/2026: ambos builds completados y **23 pruebas aprobadas**. `render.yaml` validado con el JSON Schema oficial de Render (draft 2020-12). La validación estructural no sustituye la revisión del plan ni la prueba del despliegue real.
 
 ## Seguridad y referencia académica
 

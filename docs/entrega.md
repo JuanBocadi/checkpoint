@@ -4,7 +4,7 @@ Esta lista registra tareas de publicación pendientes; no confirma que ya estén
 
 ## Infraestructura
 
-- [ ] Repo propio en GitHub con `backend/`, `frontend/` y varios commits descriptivos.
+- [x] Repo propio en GitHub con `backend/`, `frontend/` y varios commits descriptivos.
 - [ ] Clúster Atlas, usuario de base y acceso de red para el backend.
 - [ ] Backend Web Service activo y `/api/health` responde 200.
 - [ ] Frontend Static Site activo.
@@ -44,8 +44,9 @@ Esta lista registra tareas de publicación pendientes; no confirma que ya estén
 - [ ] README contiene link real del repo y las dos URLs de Render verificadas.
 - [ ] Las cuentas y contraseñas publicadas funcionan en producción.
 - [ ] No hay secretos de infraestructura en archivos versionados ni en el historial.
-- [ ] `.env.example` está completo, con credenciales vacías.
-- [ ] Builds y pruebas pasan.
+- [x] `.env.example` está completo, con credenciales vacías.
+- [x] Builds locales y 23 pruebas pasan.
+- [x] Blueprint validado contra el esquema oficial de Render.
 
 ## Entrega al profesor
 
