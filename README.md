@@ -4,17 +4,19 @@ Aplicación full stack de **Juan Cruz Bocadi** para el TP2 de Metodologías y De
 
 ## Entrega y estado del despliegue
 
-**El código está publicado en GitHub y la demo local está preparada. El despliegue en Render todavía está pendiente.** Las direcciones de Render siguientes son los nombres propuestos en `render.yaml`; se deben reemplazar por las URLs reales confirmadas al publicar. No son evidencia de un despliegue activo.
+**Backend y frontend publicados en Render y verificados el 23/11/2026.** La API se conecta a MongoDB Atlas. Quedan pendientes la publicación de la audiencia de Google y la prueba completa de los accesos sociales en producción.
 
 La ejecución local principal ya está conectada a MongoDB Atlas, base `checkpoint`, con seis videojuegos iniciales y las cuentas admin/user verificadas. `npm run dev:demo` sigue disponible como alternativa aislada y temporal.
 
-| Entregable | Estado / destino propuesto |
+| Entregable | Estado / destino |
 | --- | --- |
 | Repositorio GitHub | [JuanBocadi/checkpoint](https://github.com/JuanBocadi/checkpoint) — código publicado |
-| Frontend en Render | Pendiente: `https://checkpoint-juanbocadi.onrender.com` |
-| Backend en Render | Pendiente: `https://checkpoint-api-juanbocadi.onrender.com` |
-| Login GitHub | Probado en local por Juan; pendiente de configuración y prueba en producción |
-| Login Google | Probado en local por Juan; pendiente de configuración y prueba en producción |
+| Frontend en Render | [checkpoint-juanbocadi.onrender.com](https://checkpoint-juanbocadi.onrender.com) — activo |
+| Backend en Render | [checkpoint-api-juanbocadi.onrender.com](https://checkpoint-api-juanbocadi.onrender.com) — activo; `/api/health` responde 200 |
+| Login GitHub | Credenciales y callback de producción configurados; pendiente de completar el login en el navegador |
+| Login Google | Credenciales y callback de producción configurados; pendiente de publicar la audiencia y completar el login en el navegador |
+
+Se verificaron mediante HTTP sobre el frontend publicado: proxy `/api`, catálogo y paginación, detalle, login de ambas cuentas de corrección, sesión persistida, logout, permisos 401/403, validaciones 400, recurso inexistente 404, CRUD de videojuegos, biblioteca propia y restricciones de acceso global. El asistente respondió usando Groq y herramientas del catálogo; su historial persistió y fue inaccesible para otro usuario, incluso admin. Los registros temporales de comprobación se eliminaron. Las rutas `/privacy`, `/login`, `/admin`, `/admin/users`, `/admin/library`, `/library` y `/chat` devuelven la SPA al solicitarlas directamente. Estas comprobaciones no sustituyen la prueba manual de OAuth ni de los formularios en el navegador.
 
 ## Funcionalidades
 
@@ -32,7 +34,7 @@ La ejecución local principal ya está conectada a MongoDB Atlas, base `checkpoi
 - Formularios de registro, login y videojuegos con React Hook Form y Zod.
 - Validaciones de cuerpo y consultas, errores claros, estados vacíos y confirmación de eliminación.
 
-El catálogo de videojuegos conserva los permisos mínimos: `user` solo lee y `admin` hace ABM. El opcional de registros propios se aplica a la biblioteca personal: `user` crea, consulta, edita y elimina sus registros; `admin` puede gestionar todos. Las conversaciones del asistente son privadas para su dueño, incluso frente al administrador. Google y Groq requieren credenciales reales antes de la verificación final en producción.
+El catálogo de videojuegos conserva los permisos mínimos: `user` solo lee y `admin` hace ABM. El opcional de registros propios se aplica a la biblioteca personal: `user` crea, consulta, edita y elimina sus registros; `admin` puede gestionar todos. Las conversaciones del asistente son privadas para su dueño, incluso frente al administrador. Groq ya fue verificado en producción; Google conserva pendiente la publicación de su audiencia y la prueba de acceso social.
 
 ## Stack y estructura
 

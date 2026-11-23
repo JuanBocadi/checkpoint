@@ -1,6 +1,6 @@
 # Conexiones necesarias para completar la publicación
 
-Las cuentas y los secretos son de Juan. No enviar claves por el chat ni ponerlas en commits. Este documento enumera pasos pendientes; no confirma conexiones activas.
+Las cuentas y los secretos son de Juan. No enviar claves por el chat ni ponerlas en commits. Backend y frontend publicados en Render el 23/11/2026, con Atlas y Groq verificados. Las instrucciones siguientes sirven como referencia de configuración; queda pendiente completar y probar OAuth en producción.
 
 ## GitHub
 
@@ -25,6 +25,8 @@ Publicar el código y `render.yaml` en GitHub primero. Conectar el proveedor Git
 Completar las variables privadas en Environment. El secreto de Better Auth se genera con el Blueprint. Actualizar el rewrite `/api/*`, `BETTER_AUTH_URL` y los callbacks usando los nombres **realmente asignados** por Render; no asumir que coinciden con la propuesta.
 
 ## Google Cloud
+
+Proyecto de producción: `Checkpoint Produccion`. En Información de marca, completar la página principal con `https://checkpoint-juanbocadi.onrender.com` y la política de privacidad con `https://checkpoint-juanbocadi.onrender.com/privacy`. Ambas rutas responden 200. Guardar y volver a Público para publicar la app; después comprobar el login con una cuenta ajena a los testers.
 
 1. Abrir https://console.cloud.google.com/ con la cuenta de Juan y crear el proyecto `Checkpoint`.
 2. En Google Auth Platform, configurar nombre, email de soporte y audiencia External.
