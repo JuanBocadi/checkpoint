@@ -16,6 +16,8 @@ Estado verificado el 23/11/2026. Se distinguen las pruebas confirmadas de un rep
 - [x] Cliente Google OAuth configurado en Render y Audience en producción para cualquier cuenta.
 - [x] Groq API key configurada y chatbot probado con el catálogo real.
 - [x] Seed ejecutado sobre Atlas con ambas cuentas de corrección y login local verificado.
+- [x] Rediseño publicado desde `293bd7b`; JavaScript, CSS y 24 imágenes comprobados contra el build local.
+- [x] `/credits` y las rutas internas del nuevo frontend responden correctamente en producción.
 
 ## Pruebas confirmadas en producción
 

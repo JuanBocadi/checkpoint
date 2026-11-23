@@ -22,6 +22,8 @@ Se verificaron mediante HTTP sobre el frontend publicado: proxy `/api`, catálog
 
 La interfaz incluye tema oscuro verde, portadas reales de los seis juegos iniciales, destacados seleccionables, filtros por género, fichas con galería de capturas y juegos relacionados, y una página pública de créditos en `/credits`. Las imágenes se sirven desde `frontend/public/images/games/`; procedencia y titulares en [docs/imagenes.md](docs/imagenes.md). Un título sin material asociado conserva una portada gráfica de respaldo. El rediseño se compiló y se revisó en navegador de escritorio y en una vista móvil de 360 px, incluidos el selector de destacados, el filtro de indies y la galería de capturas.
 
+El rediseño se publicó en Render el 23/11/2026 desde el commit `293bd7b`. Se verificó que el JavaScript, el CSS y las 24 imágenes servidos por la URL pública coinciden con el build revisado. También se comprobaron las rutas internas, los créditos, el catálogo, la salud del backend y el login de ambas cuentas de corrección. La [verificación automática de esta versión](https://github.com/JuanBocadi/checkpoint/actions/runs/45217419455) completó los builds y las pruebas correctamente.
+
 - Catálogo público, detalle, búsqueda por título, filtros por género y plataforma y paginación.
 - Registro, login con email/contraseña, login GitHub y cierre de sesión con Better Auth.
 - Sesiones persistidas en MongoDB y consultadas desde React mediante `useSession()`.
